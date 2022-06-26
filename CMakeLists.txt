@@ -1,5 +1,13 @@
 cmake_minimum_required(VERSION 3.23)
-set(CMAKE_TOOLCHAIN_FILE "D:/Dev/vcpkg/scripts/buildsystems/vcpkg.cmake")
+if(NOT DEFINED ENV{VCPKG_ROOT})
+message(FATAL_ERROR "VCPKG_ROOT is not defined")
+else()
+message(STATUS "VCPKG_ROOT is $ENV{VCPKG_ROOT}")
+endif()
+
+
+set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake")
+message(STATUS "CMAKE_TOOLCHAIN_FILE is ${CMAKE_TOOLCHAIN_FILE}")
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_GENERATOR_PLATFORM x64)
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
