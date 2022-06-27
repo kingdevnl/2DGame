@@ -1,10 +1,11 @@
 #include "CameraController.hpp"
 
-#include "Core/Input/Keyboard.hpp"
-#include "Core/Util/Math.hpp"
+#include "Engine/Core/Input/Keyboard.hpp"
+#include "Engine/Core/Util/Math.hpp"
 
 namespace Engine
 {
+
     CameraController::CameraController(float aspectRatio)
     {
         this->aspectRatio = aspectRatio;
@@ -14,18 +15,22 @@ namespace Engine
     }
 
 
-    void CameraController::OnMouseScroll(Events::MouseScrollEvent& e)
+    bool CameraController::OnMouseScroll(MouseScrollEvent& event)
     {
-        this->zoomLevel -= static_cast<float>(e.yOffset) * 0.2f;
+        this->zoomLevel -= static_cast<float>(event.yOffset) * 0.2f;
         this->zoomLevel = Math::Clamp(this->zoomLevel, 0.1f, 4.0f);
         UpdateCamera();
+        return true;
     }
 
-    void CameraController::OnWindowResize(Events::WindowResizeEvent& e)
+    bool CameraController::OnWindowResize(WindowResizeEvent& event)
     {
-        this->aspectRatio = static_cast<float>(e.width) / static_cast<float>(e.height);
+        spdlog::info("Window resized to {}x{}", event.width, event.height);
+        this->aspectRatio = static_cast<float>(event.width) / static_cast<float>(event.height);
         UpdateCamera();
+        return true;
     }
+
 
     void CameraController::UpdateCamera()
     {
@@ -57,17 +62,8 @@ namespace Engine
 
     void CameraController::OnEvent(Event& event)
     {
-        switch (event.type)
-        {
-        case EventType::WINDOW_RESIZE_EVENT:
-            OnWindowResize(static_cast<Events::WindowResizeEvent&>(event));
-            break;
-
-        case EventType::MOUSE_SCROLL_EVENT:
-            OnMouseScroll(static_cast<Events::MouseScrollEvent&>(event));
-            break;
-
-        default: break;
-        }
+            EventDispatcher dispatcher(event);
+            dispatcher.Dispatch<MouseScrollEvent>(BIND_EVENT_FN(CameraController::OnMouseScroll));
+            dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(CameraController::OnWindowResize));
     }
 }

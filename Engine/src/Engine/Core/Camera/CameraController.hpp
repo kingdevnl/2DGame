@@ -1,7 +1,6 @@
 #pragma once
 #include "Camera.hpp"
-#include "../Event/Event.hpp"
-#include "../Event/Events.hpp"
+#include "Engine/Core/Event/Events.hpp"
 
 
 namespace Engine
@@ -14,8 +13,8 @@ namespace Engine
         glm::vec3 position;
 
 
-        void OnMouseScroll(Events::MouseScrollEvent& e);
-        void OnWindowResize(Events::WindowResizeEvent& e);
+        bool OnMouseScroll(MouseScrollEvent& event);
+        bool OnWindowResize(WindowResizeEvent& event);
 
         void UpdateCamera();
 

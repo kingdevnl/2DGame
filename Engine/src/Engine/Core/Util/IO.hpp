@@ -1,4 +1,5 @@
-#include "../../Engine.hpp"
+#pragma once
+#include "Engine/Engine.hpp"
 
 
 namespace Engine::IO
@@ -11,6 +12,7 @@ namespace Engine::IO
         if (!fileStream.is_open())
         {
             CRITICAL("Could not read file {}. File does not exist.", fileName);
+            exit(1);
             return "";
         }
 

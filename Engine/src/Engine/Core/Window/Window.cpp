@@ -1,15 +1,17 @@
 #include "Window.hpp"
+#include "Engine/Engine.hpp"
+#include "Engine/Core/Application/Application.hpp"
+#include "Engine/Core/Event/Events.hpp"
+
 #include <gl/glew.h>
 #include <GLFW/glfw3.h>
 
-#include "../App.hpp"
-#include "../Event/Events.hpp"
 
 namespace Engine
 {
     void Window::Create()
     {
-        DEBUG("Creating window {} {}x{}", title, width, height);
+        INFO("Creating window {} {}x{}", title, width, height);
         glfwInit();
         glfwDefaultWindowHints();
         this->handle = glfwCreateWindow(this->width, this->height, this->title.c_str(), nullptr, nullptr);
@@ -24,25 +26,26 @@ namespace Engine
             win->width = width;
             win->height = height;
             glViewport(0, 0, width, height);
-
-            auto event = Events::WindowResizeEvent(width, height);
-            Application::app->OnEvent(event);
+            auto event = WindowResizeEvent(width, height);
+            Application::Get()->OnEvent(event);
         });
-
+        
         glfwSetKeyCallback(this->handle, [](GLFWwindow* window, int key, int scancode, int action, int mods)
         {
-            auto event = Events::KeyEvent(key, action, mods);
-            Application::app->OnEvent(event);
+            if (action == GLFW_PRESS)
+            {
+                auto event = KeyPressEvent(key, scancode);
+                Application::Get()->OnEvent(event);
+            }
         });
-
+        
         //scroll callback
         glfwSetScrollCallback(this->handle, [](GLFWwindow* window, double xoffset, double yoffset)
         {
-            auto event = Events::MouseScrollEvent(xoffset, yoffset);
-            Application::app->OnEvent(event);
+            auto event = MouseScrollEvent(xoffset, yoffset);
+            Application::Get()->OnEvent(event);
         });
 
-        // center the window
 
         auto monitor = glfwGetPrimaryMonitor();
         auto mode = glfwGetVideoMode(monitor);

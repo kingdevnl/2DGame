@@ -1,9 +1,8 @@
 ﻿#pragma once
-#include "../Engine.hpp"
-#include "Event/Event.hpp"
-#include "Camera/Camera.hpp"
-#include "Window/Window.hpp"
 
+#include "Core/Event/Event.hpp"
+#include "Core/Window/Window.hpp"
+#include "Engine.hpp"
 
 namespace Engine
 {

@@ -1,8 +1,9 @@
 ﻿#include "Renderer.hpp"
+#include "Shader.hpp"
+
 #include <gl/glew.h>
 #include <glm/ext/matrix_transform.hpp>
 
-#include "Shader.hpp"
 
 namespace Engine
 {
@@ -29,7 +30,7 @@ namespace Engine
         vertices.clear();
     }
 
-    void Renderer::DrawQuad(glm::vec2 offset, glm::vec3 color, glm::vec3 scale, float rotation, float texture)
+    void Renderer::DrawQuad(glm::vec2 offset, glm::vec3 color, glm::vec2 scale, glm::vec3 rotation, float texture)
     {
         static const float size = 0.5f;
 
@@ -61,7 +62,9 @@ namespace Engine
             auto texCoord = glm::vec2(textCoords[tc], textCoords[tc + 1]);
 
             glm::mat4 transform = translate(glm::mat4(1.0), glm::vec3(offset.x, offset.y, 0));
-            transform = rotate(transform, glm::radians(rotation), glm::vec3(0, 0, 1));
+            transform = rotate(transform, glm::radians(rotation.x), glm::vec3(1, 0, 0));
+            transform = rotate(transform, glm::radians(rotation.y), glm::vec3(0, 1, 0));
+            transform = rotate(transform, glm::radians(rotation.z), glm::vec3(0, 0, 1));
             transform = glm::scale(transform, glm::vec3(scale.x, scale.y, 1));
             vertex.coords = transform * glm::vec4(coords, 1);
             vertex.color = color;

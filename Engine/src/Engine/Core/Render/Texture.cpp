@@ -1,7 +1,8 @@
 ﻿#include "Texture.hpp"
-#define STB_IMAGE_IMPLEMENTATION
-#include "../Vendor/stb_image.h"
+
 #include <gl/glew.h>
+#define STB_IMAGE_IMPLEMENTATION
+#include "Vendor/stb_image.h"
 
 
 namespace Engine

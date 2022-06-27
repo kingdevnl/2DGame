@@ -1,5 +1,5 @@
-#include "../../Engine.hpp"
-
+#pragma once
+#include "Engine/Engine.hpp"
 
 namespace Engine::Math
 {

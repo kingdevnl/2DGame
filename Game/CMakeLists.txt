@@ -16,8 +16,10 @@ set_target_properties(
     VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/Game")
     
     
-include_directories(Engine "../Vendor/imgui")
+target_include_directories(Game PRIVATE "../Engine/src/" "../Vendor/imgui")
 
 file(COPY Assets DESTINATION ${PROJECT_BINARY_DIR})
 
-target_compile_options(Game PRIVATE "/MP")
+if(WIN32)
+    target_compile_options(Game PRIVATE "/MP")
+endif()

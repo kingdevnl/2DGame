@@ -10,7 +10,6 @@
 #include <sstream>
 #include <string>
 #include <map>
-
 #include <glm/glm.hpp>
 
 #include "Core/Logger.hpp"

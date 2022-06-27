@@ -2,13 +2,13 @@
 
 #include <gl/glew.h>
 
-#include "Window/Window.hpp"
+#include "Core/Window/Window.hpp"
 #include <GLFW/glfw3.h>
 #include <imgui/imgui.h>
 #include <imgui/imgui_impl_glfw.h>
 #include <imgui/imgui_impl_opengl3.h>
 
-#include "Render/Texture.hpp"
+#include "Core/Render/Texture.hpp"
 
 namespace Engine
 {

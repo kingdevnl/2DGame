@@ -1,5 +1,5 @@
 #include "Shader.hpp"
-#include "../Util/IO.hpp"
+#include "Engine/Core/Util/IO.hpp"
 
 #include <gl/glew.h>
 #include <glm/gtc/type_ptr.hpp>
@@ -63,7 +63,7 @@ namespace Engine
         glAttachShader(this->id, this->fragment);
         glLinkProgram(this->id);
 
-        DEBUG("Created shader program {} {} {}", this->id, this->vertex, this->fragment);
+        INFO("Created shader program {} {} {}", this->id, this->vertex, this->fragment);
     }
 
 
@@ -122,6 +122,9 @@ namespace Engine
     {
         string vertex_source = IO::ReadFile(vertexFile.c_str());
         string fragment_source = IO::ReadFile(fragmentFile.c_str());
+
+        
+        
         return MakeRef<Shader>(vertex_source, fragment_source);
     }
 }
